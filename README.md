@@ -1,4 +1,4 @@
-# Goforer Android Advanced App Architecture 1.0 Blueprint
+## Goforer Android Advanced App Architecture 1.0 Blueprint
 <img src="https://github.com/Lukoh/CleanArchitecture_Example/blob/master/Architecture.png" alt="Log-in Demo" width="880" />
 
 The Android framework provides a lot of flexibility in deciding how to organize and architect all Android Apps. While this freedom is very valuable, it can also lead to apps with large classes, inconsistent naming schemes, as well as mismatching or missing architectures. These types of issues can make testing, maintaining and extending your apps difficult.
@@ -11,6 +11,6 @@ You can use all source code in this project as a learning reference, or as a sta
 Base Android Architecture consist of Presentation layer, Domain layer and Repository layer. And new latest technologies, Clean Architecture + Dagger 2.11 + MVVM 
 design pattern + LiveData + ROOM Tech, were applied into Base Android Architecture. These stuff make Android Apps to be extended being more competitive power and help them to maintain consistency.
 
-## Base Android Architecture
+## Advanced Android App Architecture
 <img src="https://github.com/Lukoh/AppArch/blob/master/Goforer_App_Achitecture.png" alt="Log-in Demo" width="880" />
  
