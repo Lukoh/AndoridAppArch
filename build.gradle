@@ -1,0 +1,43 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+
+    repositories {
+        maven { url 'https://maven.google.com' }
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.0.0-alpha4'
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+ext.arch_version = "1.0.0-alpha3"
+ext.support_version = "25.3.1"
+ext.dagger_version = "2.11-rc2"
+ext.junit_version = "4.12"
+ext.espresso_version = "2.2.2"
+ext.retrofit_version = "2.2.0"
+ext.mockwebserver_version = "3.6.0"
+ext.apache_commons_version = "2.5"
+ext.mockito_version = "2.7.19"
+ext.constraint_layout_version = "1.0.2"
+ext.glide_version = "3.7.0"
+ext.eventbus_version = "3.0.0"
+ext.timber_version = "4.5.1"
+ext.butterknife_version = "8.4.0"
+
+allprojects {
+    repositories {
+        jcenter()
+        mavenCentral()
+        maven { url 'https://maven.google.com' }
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

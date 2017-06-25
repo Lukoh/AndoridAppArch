@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="disconnect_image_top_margin">144dp</dimen>
+    <dimen name="helper_icon_clear_margin">32dp</dimen>
+    <dimen name="material_drawer_item_count_panel_padding">16dp</dimen>
+    <dimen name="material_drawer_item_menu_icon_width">96dp</dimen>
+    <dimen name="material_drawer_item_menu_icon_height">96dp</dimen>
+    <dimen name="material_drawer_item_menu">146dp</dimen>
+    <dimen name="material_drawer_item_menu_name">20sp</dimen>
+    <dimen name="material_drawer_item_menu_sub1">17sp</dimen>
+    <dimen name="material_drawer_item_menu_sub2">18sp</dimen>
+    <dimen name="material_drawer_item_menu_description">16sp</dimen>
+    <dimen name="material_drawer_item_menu_padding">4dp</dimen>
+    <dimen name="material_drawer_item_menu_icon_padding_right">14dp</dimen>
+</resources>

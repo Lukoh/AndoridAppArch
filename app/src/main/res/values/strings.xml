@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">GoforerArchBlueprint</string>
+    <string name="not_connected_internet">No Internet connection</string>
+    <string name="check_connection">Check your connection again</string>
+    <string name="toast_no_data">No data available.</string>
+    <string name="repository">Repositories</string>
+    <string name="star_count">Star Count : </string>
+    <string name="no_homepage">There is no homepage.</string>
+    <string name="drawer_item_location">Location</string>
+    <string name="drawer_item_blog">Blog</string>
+    <string name="drawer_item_company">Company</string>
+    <string name="drawer_item_followers">Followers</string>
+    <string name="drawer_item_following">Following</string>
+    <string name="drawer_item_repository_count">Repositories</string>
+    <string name="not_found">Not Found</string>
+</resources>
