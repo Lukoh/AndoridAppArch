@@ -8,7 +8,7 @@ You can use all source code in this project as a learning reference, or as a sta
  
 ## Summary
 
-Base Android Architecture consist of Presentation layer, Domain layer and Repository layer. And new latest technologies, Clean Architecture + Dagger 2.11 + MVVM 
+Goforer Advanced Android Architecture consist of Presentation layer, Domain layer and Repository layer. And new latest technologies, Clean Architecture + Dagger 2.11 + MVVM 
 design pattern + LiveData + ROOM Tech, were applied into Advanced Android App Architecture. These stuff make Android Apps to be extended being more competitive power and help them to maintain consistency.
 
 ## Advanced Android App Architecture
