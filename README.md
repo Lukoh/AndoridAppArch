@@ -12,5 +12,5 @@ Base Android Architecture consist of Presentation layer, Domain layer and Reposi
 design pattern + LiveData + ROOM Tech, were applied into Base Android Architecture. These stuff make Android Apps to be extended being more competitive power and help them to maintain consistency.
 
 ## Base Android Architecture
-<img src="https://github.com/Lukoh/CleanArchitecture_Example/blob/master/Android%20Architecture.png" alt="Log-in Demo" width="880" />
+<img src="https://github.com/Lukoh/CleanArchitecture_Example/blob/master/Goforer_App_Achitectur.png" alt="Log-in Demo" width="880" />
  
