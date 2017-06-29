@@ -45,6 +45,8 @@ import butterknife.BindView;
 public abstract class RecyclerFragment<T> extends BaseFragment {
     private static final String TAG = "RecyclerFragment";
 
+    private static final int FIRST_PAGE = 1;
+
     private BaseListAdapter mBaseArrayAdapter;
     private OnProcessListener mListener;
 
@@ -105,9 +107,7 @@ public abstract class RecyclerFragment<T> extends BaseFragment {
     }
 
     private void setViews() {
-        if (mSwipeLayout != null) {
-            setupSwipeLayout();
-        }
+        setupSwipeLayout();
 
         mRecyclerView.setLayoutManager(createLayoutManager());
         if (isItemDecorationVisible()) {
@@ -145,8 +145,8 @@ public abstract class RecyclerFragment<T> extends BaseFragment {
                 mBaseArrayAdapter.setLoadingItems(true);
             }
 
-            mCurrentPage = 1;
-            mTotalPage = 1;
+            mCurrentPage = FIRST_PAGE;
+            setTotalPage(FIRST_PAGE);
             if (isRefreshed) {
                 requestData(false);
             } else {
@@ -198,7 +198,7 @@ public abstract class RecyclerFragment<T> extends BaseFragment {
                         }
 
                         scrolledReachToLast();
-                        requestData(false);
+                        requestNextData(mCurrentPage);
                         mListener.onScrolledToLast(recyclerView, dx, dy);
                     } else {
                         mBaseArrayAdapter.setReachedToLastItem(false);
@@ -265,11 +265,21 @@ public abstract class RecyclerFragment<T> extends BaseFragment {
     }
 
     /**
+     * Set the total page count
+     *
+     * @param totalPage The total page count
+     *
+     */
+    protected void setTotalPage(int totalPage) {
+        mTotalPage = totalPage;
+    }
+
+    /**
      * Get the total page count
      *
      * @return The total page count
      */
-    protected int getTotalPageCount() {
+    protected int getTotalPage() {
         return mTotalPage;
     }
 
@@ -446,6 +456,8 @@ public abstract class RecyclerFragment<T> extends BaseFragment {
      */
     protected abstract void requestData(boolean isNew);
 
+    protected abstract void requestNextData(int page);
+
     /**
      * RequestClient to get the updated information or images from server.
      * <p>
@@ -501,14 +513,10 @@ public abstract class RecyclerFragment<T> extends BaseFragment {
         Log.i(TAG, "refresh");
 
         if (refreshed) {
-            if (mSwipeLayout != null) {
-                mSwipeLayout.post(() -> {
-                    mSwipeLayout.setRefreshing(true);
-                    request(true);
-                });
-            } else {
-                request(false);
-            }
+            mSwipeLayout.post(() -> {
+                mSwipeLayout.setRefreshing(true);
+                request(true);
+            });
         }
     }
 
@@ -527,7 +535,7 @@ public abstract class RecyclerFragment<T> extends BaseFragment {
 
     @SuppressWarnings("unused")
     protected void clear() {
-        mCurrentPage = 1;
+        mCurrentPage = FIRST_PAGE;
 
         if (mItems != null && mItems.size() > 0) {
             mItems.clear();
@@ -538,15 +546,13 @@ public abstract class RecyclerFragment<T> extends BaseFragment {
      * Notify that data-parsing processing is completed.
      */
     public void doneRefreshing() {
+        mSwipeLayout.setRefreshing(false);
+
         mIsLoading = false;
         mIsUpdated = false;
 
         if (mBaseArrayAdapter != null) {
             mBaseArrayAdapter.setLoadingItems(false);
-        }
-
-        if (mSwipeLayout != null) {
-            mSwipeLayout.setRefreshing(false);
         }
     }
 
@@ -570,6 +576,7 @@ public abstract class RecyclerFragment<T> extends BaseFragment {
      *
      * @return current page
      */
+    @SuppressWarnings("unused")
     public int getCurrentPage() {
         return mCurrentPage;
     }

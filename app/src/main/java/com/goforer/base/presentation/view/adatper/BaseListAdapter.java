@@ -18,15 +18,12 @@ package com.goforer.base.presentation.view.adatper;
 
 import android.annotation.SuppressLint;
 import android.os.AsyncTask;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.annotation.MainThread;
 import android.support.annotation.Nullable;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 
 import com.goforer.base.presentation.model.BaseModel;
-import com.goforer.base.presentation.view.fragment.RecyclerFragment;
 import com.goforer.base.presentation.view.holder.BaseViewHolder;
 import com.goforer.base.presentation.view.holder.ItemHolderBinder;
 
@@ -76,7 +73,7 @@ public abstract class BaseListAdapter<T extends BaseModel> extends BaseAdapter {
 
     @SuppressLint("StaticFieldLeak")
     @MainThread
-    public void addItems(List<T> items, final RecyclerFragment fragment) {
+    public void addItems(List<T> items) {
         mDataVersion ++;
         if (mItems == null) {
             if (items == null) {
@@ -133,12 +130,6 @@ public abstract class BaseListAdapter<T extends BaseModel> extends BaseAdapter {
                 }
             }.execute();
         }
-
-        new Handler(Looper.getMainLooper()).postDelayed(()-> {
-            if (fragment.getRefreshLayout().isRefreshing()) {
-                fragment.doneRefreshing();
-            }
-        }, 100);
     }
 
     /**

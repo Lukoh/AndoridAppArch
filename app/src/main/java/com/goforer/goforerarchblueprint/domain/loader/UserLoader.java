@@ -45,10 +45,10 @@ public class UserLoader extends Loader<Resource<User>> {
 
     @Override
     public LiveData<Resource<User>> load(String userName) {
-        return new NetworkBoundResource<User,User>(mAppExecutors,
+        return new NetworkBoundResource<User>(mAppExecutors, NetworkBoundResource.LOAD_USER_INFO,
                 NetworkBoundResource.BOUND_FROM_BACKEND) {
             @Override
-            protected void saveResponse(@NonNull User user) {
+            protected void saveToCache(@NonNull User user) {
                 mUserDao.insert(user);
             }
 
@@ -73,6 +73,11 @@ public class UserLoader extends Loader<Resource<User>> {
             @Override
             protected LiveData<ApiResponse<User>> loadFromNetwork() {
                 return mGithubService.getUser(userName);
+            }
+
+            @Override
+            protected void clearCache() {
+                mUserDao.removeUser();
             }
         }.asLiveData();
     }

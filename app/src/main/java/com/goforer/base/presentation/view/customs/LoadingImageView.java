@@ -25,11 +25,11 @@ import com.goforer.goforerarchblueprint.R;
 
 
 @SuppressWarnings("unused")
-public class AnimationImageView extends AppCompatImageView {
+public class LoadingImageView extends AppCompatImageView {
 
     AnimationDrawable mDrawable;
 
-    public AnimationImageView(Context context, AttributeSet attrs) {
+    public LoadingImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
         startAnimation();
     }

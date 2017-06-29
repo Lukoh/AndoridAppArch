@@ -16,11 +16,9 @@
 
 package com.goforer.goforerarchblueprint.repository.model.data;
 
-import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Entity;
 
 import com.goforer.base.presentation.model.BaseModel;
-import com.goforer.goforerarchblueprint.repository.network.response.Resource;
 import com.google.gson.annotations.SerializedName;
 
 @Entity(primaryKeys = "name")

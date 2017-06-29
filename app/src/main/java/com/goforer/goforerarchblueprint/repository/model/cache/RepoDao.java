@@ -34,6 +34,9 @@ public interface RepoDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertRepos(List<Repo> repos);
 
-    @Query("SELECT * FROM Repo " + "ORDER BY stars DESC")
-    LiveData<List<Repo>> getRepositories();
+    @Query("SELECT * FROM Repo ")
+    LiveData<List<Repo>> getRepo();
+
+    @Query("DELETE FROM Repo")
+    void removeRepos();
 }

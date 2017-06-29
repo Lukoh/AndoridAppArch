@@ -17,7 +17,6 @@
 package com.goforer.goforerarchblueprint.domain.loader;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.Transformations;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -26,7 +25,6 @@ import com.goforer.goforerarchblueprint.repository.model.cache.RepoDao;
 import com.goforer.goforerarchblueprint.presentation.util.RateLimiter;
 import com.goforer.goforerarchblueprint.repository.network.response.ApiResponse;
 import com.goforer.goforerarchblueprint.repository.network.response.Resource;
-import com.goforer.goforerarchblueprint.repository.model.data.AbsentLiveData;
 import com.goforer.goforerarchblueprint.repository.model.data.Repo;
 
 import java.util.List;
@@ -48,10 +46,10 @@ public class RepoLoader extends Loader<Resource<List<Repo>>> {
 
     @Override
     public LiveData<Resource<List<Repo>>> load(String userName) {
-        return new NetworkBoundResource<List<Repo>,
-                List<Repo>>(mAppExecutors, NetworkBoundResource.BOUND_FROM_BACKEND) {
+        return new NetworkBoundResource<List<Repo>>(mAppExecutors, NetworkBoundResource.LOAD_REPOS_NORMAL,
+                            NetworkBoundResource.BOUND_FROM_BACKEND) {
             @Override
-            protected void saveResponse(@NonNull List<Repo> repos) {
+            protected void saveToCache(@NonNull List<Repo> repos) {
                 mRepoDao.insertRepos(repos);
             }
 
@@ -63,24 +61,60 @@ public class RepoLoader extends Loader<Resource<List<Repo>>> {
             @NonNull
             @Override
             protected LiveData<List<Repo>> loadFromCache() {
-                return Transformations.switchMap(mRepoDao.getRepositories(), repos -> {
-                    if (repos.size() == 0) {
-                        return AbsentLiveData.create();
-                    } else {
-                        return mRepoDao.getRepositories();
-                    }
-                });
+                return mRepoDao.getRepo();
             }
 
             @NonNull
             @Override
             protected LiveData<ApiResponse<List<Repo>>> loadFromNetwork() {
-                return mGithubService.getRepository(userName);
+                return mGithubService.getRepos(userName);
             }
 
             @Override
             protected void onFetchFailed() {
                 repoListRateLimit.reset(userName);
+            }
+
+            @Override
+            protected void clearCache() {
+                mRepoDao.removeRepos();
+            }
+        }.asLiveData();
+    }
+
+    public LiveData<Resource<List<Repo>>> loadNext(int uid, int page) {
+        return new NetworkBoundResource<List<Repo>>(mAppExecutors, NetworkBoundResource.LOAD_REPOS_NEXT,
+                            NetworkBoundResource.BOUND_FROM_BACKEND) {
+            @Override
+            protected void saveToCache(@NonNull List<Repo> repos) {
+                mRepoDao.insertRepos(repos);
+            }
+
+            @Override
+            protected boolean shouldFetch(@Nullable List<Repo> data) {
+                return data == null || data.isEmpty();
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<List<Repo>> loadFromCache() {
+                return mRepoDao.getRepo();
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<List<Repo>>> loadFromNetwork() {
+                return mGithubService.getNextRepos(uid, page);
+            }
+
+            @Override
+            protected void onFetchFailed() {
+                repoListRateLimit.reset(Integer.toString(uid));
+            }
+
+            @Override
+            protected void clearCache() {
+                mRepoDao.removeRepos();
             }
         }.asLiveData();
     }

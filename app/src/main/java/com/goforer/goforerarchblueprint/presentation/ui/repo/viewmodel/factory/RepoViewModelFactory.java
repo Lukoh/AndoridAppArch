@@ -38,7 +38,7 @@ public class RepoViewModelFactory implements ViewModelProvider.Factory {
         creators = new ArrayMap<>();
         // we cannot inject view models directly because they won't be bound to the owner's
         // view model scope.
-        creators.put(RepoViewModel.class, () -> viewModelSubComponent.repoViewModel());
+        creators.put(RepoViewModel.class, viewModelSubComponent::repoViewModel);
     }
 
     @Override

@@ -16,18 +16,18 @@
 
 package com.goforer.goforerarchblueprint.presentation.ui.splash;
 
-import android.arch.lifecycle.LifecycleRegistry;
-import android.arch.lifecycle.LifecycleRegistryOwner;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.goforer.base.presentation.utils.CommonUtils;
+import com.goforer.base.presentation.view.fragment.BaseFragment;
+import com.goforer.goforerarchblueprint.GoforerArchBlueprint;
 import com.goforer.goforerarchblueprint.R;
-import com.goforer.goforerarchblueprint.di.Injectable;
 import com.goforer.goforerarchblueprint.presentation.caller.Caller;
 import com.goforer.goforerarchblueprint.presentation.ui.splash.viewmodel.UserViewModel;
 import com.goforer.goforerarchblueprint.presentation.ui.splash.viewmodel.factory.UserViewModelFactory;
@@ -35,16 +35,12 @@ import com.goforer.goforerarchblueprint.presentation.util.AutoClearedValue;
 
 import javax.inject.Inject;
 
-public class SplashFragment extends Fragment implements LifecycleRegistryOwner, Injectable {
-    private final LifecycleRegistry lifecycleRegistry = new LifecycleRegistry(this);
+import static com.goforer.goforerarchblueprint.repository.network.response.Status.ERROR;
+import static com.goforer.goforerarchblueprint.repository.network.response.Status.SUCCESS;
 
+public class SplashFragment extends BaseFragment {
     @Inject
     UserViewModelFactory mUserViewModelFactory;
-
-    @Override
-    public LifecycleRegistry getLifecycle() {
-        return lifecycleRegistry;
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -62,8 +58,13 @@ public class SplashFragment extends Fragment implements LifecycleRegistryOwner, 
                                                     .get(UserViewModel.class);
         userViewModel.setUserName(SplashActivity.USER_NAME);
         userViewModel.getUser().observe(this, userResource -> {
-            if (userResource != null && userResource.data != null) {
+            if (userResource != null && userResource.getData() != null && userResource.getStatus().equals(SUCCESS)) {
                 moveToMain();
+            } else {
+                if (userResource != null && userResource.getStatus().equals(ERROR)) {
+                    CommonUtils.showToastMessage(getContext(), userResource.getMessage(), Toast.LENGTH_SHORT);
+                    GoforerArchBlueprint.closeApplication();
+                }
             }
         });
     }

@@ -41,7 +41,7 @@ import android.support.v4.app.FragmentManager;
 
 import com.goforer.goforerarchblueprint.GoforerArchBlueprint;
 import com.goforer.goforerarchblueprint.di.DaggerAppComponent;
-import com.goforer.goforerarchblueprint.di.Injectable;
+import com.goforer.base.presentation.view.di.Injectable;
 
 import dagger.android.AndroidInjection;
 import dagger.android.support.AndroidSupportInjection;

@@ -73,6 +73,8 @@ public class RepoAdapter extends BaseListAdapter<Repo> implements ItemTouchHelpe
 
         if (isReachedToLastPage() && position == itemCount) {
             return VIEW_TYPE_FOOTER;
+        } else if (position == itemCount) {
+            return VIEW_TYPE_LOADING;
         }
 
         return VIEW_TYPE_ITEM;
@@ -86,6 +88,10 @@ public class RepoAdapter extends BaseListAdapter<Repo> implements ItemTouchHelpe
             case VIEW_TYPE_FOOTER:
                 view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_last_item,
                         viewGroup, false);
+                return new DefaultViewHolder(view);
+            case VIEW_TYPE_LOADING:
+                view = LayoutInflater.from(viewGroup.getContext()).inflate(
+                        R.layout.list_loading_item, viewGroup, false);
                 return new DefaultViewHolder(view);
             default:
                 return super.onCreateViewHolder(viewGroup, type);
@@ -142,8 +148,8 @@ public class RepoAdapter extends BaseListAdapter<Repo> implements ItemTouchHelpe
 
     @Override
     protected boolean areContentsTheSame(Repo oldItem, Repo newItem) {
-        return Objects.equals(oldItem.getOwner().getAvatarUrl(), newItem.getOwner().getAvatarUrl())
-                && oldItem.getStars() == newItem.getStars();
+        return Objects.equals(oldItem.getName(), newItem.getName())
+                && Objects.equals(oldItem.getDescription(), newItem.getDescription());
     }
 
     @SuppressWarnings("unused")

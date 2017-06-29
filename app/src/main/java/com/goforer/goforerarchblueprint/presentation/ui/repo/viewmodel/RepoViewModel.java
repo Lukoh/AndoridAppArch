@@ -37,8 +37,11 @@ public class RepoViewModel extends ViewModel {
 
     private final LiveData<Resource<List<Repo>>> mRepos;
 
+    private final RepoLoader mLoader;
+
     @Inject
     RepoViewModel(RepoLoader loader) {
+        mLoader = loader;
         mLiveUserName = new MutableLiveData<>();
         mRepos = Transformations.switchMap(mLiveUserName, userName -> {
             if (userName == null || userName.isEmpty()) {
@@ -51,6 +54,10 @@ public class RepoViewModel extends ViewModel {
 
     public LiveData<Resource<List<Repo>>> getRepos() {
         return mRepos;
+    }
+
+    public LiveData<Resource<List<Repo>>> getNextRepos(int uid, int page) {
+        return mLoader.loadNext(uid, page);
     }
 
     public void setUserName(String userName) {

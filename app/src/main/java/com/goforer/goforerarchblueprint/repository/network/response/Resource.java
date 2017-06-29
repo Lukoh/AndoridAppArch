@@ -14,6 +14,22 @@
  * limitations under the License.
  */
 
+/*
+ * Copyright (C) 2017 Lukoh Nam, goForer
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.goforer.goforerarchblueprint.repository.network.response;
 
 import android.support.annotation.NonNull;
@@ -26,30 +42,49 @@ import android.support.annotation.Nullable;
 public class Resource<T> {
 
     @NonNull
-    public final Status status;
+    private final Status mStatus;
 
     @Nullable
-    public final String message;
+    private final String mMessage;
 
     @Nullable
-    public final T data;
+    private final T mData;
 
-    public Resource(@NonNull Status status, @Nullable T data, @Nullable String message) {
-        this.status = status;
-        this.data = data;
-        this.message = message;
+    private final int mLastPage;
+
+    private Resource(@NonNull Status status, @Nullable T data, @Nullable String message, int lastPage) {
+        mStatus = status;
+        mData = data;
+        mMessage = message;
+        mLastPage = lastPage;
     }
 
-    public static <T> Resource<T> success(@Nullable T data) {
-        return new Resource<>(Status.SUCCESS, data, null);
+    public static <T> Resource<T> success(@Nullable T data, int lastPage) {
+        return new Resource<>(Status.SUCCESS, data, null, lastPage);
     }
 
     public static <T> Resource<T> error(String msg, @Nullable T data) {
-        return new Resource<>(Status.ERROR, data, msg);
+        return new Resource<>(Status.ERROR, data, msg, 0);
     }
 
     public static <T> Resource<T> loading(@Nullable T data) {
-        return new Resource<>(Status.LOADING, data, null);
+        return new Resource<>(Status.LOADING, data, null, 0);
+    }
+
+    public Status getStatus() {
+        return mStatus;
+    }
+
+    public String getMessage() {
+        return mMessage;
+    }
+
+    public T getData() {
+        return mData;
+    }
+
+    public int getLastPage() {
+        return mLastPage;
     }
 
     @Override
@@ -57,35 +92,37 @@ public class Resource<T> {
         if (this == o) {
             return true;
         }
+
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
 
         Resource<?> resource = (Resource<?>) o;
 
-        if (status != resource.status) {
+        if (mStatus != resource.mStatus) {
             return false;
         }
-        if (message != null ? !message.equals(resource.message) : resource.message != null) {
-            return false;
-        }
-        return data != null ? data.equals(resource.data) : resource.data == null;
+
+        if (mMessage != null ? mMessage.equals(resource.mMessage) : resource.mMessage == null)
+            if (mData != null ? mData.equals(resource.mData) : resource.mData == null) return true;
+        return false;
+
     }
 
     @Override
     public int hashCode() {
-        int result = status.hashCode();
-        result = 31 * result + (message != null ? message.hashCode() : 0);
-        result = 31 * result + (data != null ? data.hashCode() : 0);
+        int result = mStatus.hashCode();
+        result = 31 * result + (mMessage != null ? mMessage.hashCode() : 0);
+        result = 31 * result + (mData != null ? mData.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
         return "Resource{" +
-                "status=" + status +
-                ", message='" + message + '\'' +
-                ", data=" + data +
+                "status=" + mStatus +
+                ", message='" + mMessage + '\'' +
+                ", data=" + mData +
                 '}';
     }
 }

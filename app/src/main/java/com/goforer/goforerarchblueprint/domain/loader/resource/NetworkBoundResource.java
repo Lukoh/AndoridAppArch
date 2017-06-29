@@ -40,6 +40,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.WorkerThread;
 
 import com.goforer.goforerarchblueprint.AppExecutors;
+import com.goforer.goforerarchblueprint.repository.model.data.AbsentLiveData;
 import com.goforer.goforerarchblueprint.repository.network.response.ApiResponse;
 import com.goforer.goforerarchblueprint.repository.network.response.Resource;
 
@@ -49,30 +50,45 @@ import com.goforer.goforerarchblueprint.repository.network.response.Resource;
  * You can read more about it in the <a href="https://developer.android.com/arch">Architecture
  * Guide</a>.
  * @param <ResultType>
- * @param <RequestType>
  */
-public abstract class NetworkBoundResource<ResultType, RequestType> {
+public abstract class NetworkBoundResource<ResultType> {
     @SuppressWarnings("unused")
     public static final int BOUND_TO_BACKEND = 0;
     public static final int BOUND_FROM_BACKEND = 1;
+
+    public static final int LOAD_USER_INFO = 0;
+    public static final int LOAD_REPOS_NORMAL = 1;
+    public static final int LOAD_REPOS_NEXT = 2;
+
 
     private final AppExecutors mAppExecutors;
 
     private final MediatorLiveData<Resource<ResultType>> mResult = new MediatorLiveData<>();
 
     @MainThread
-    protected NetworkBoundResource(AppExecutors appExecutors, int boundType) {
+    protected NetworkBoundResource(AppExecutors appExecutors, int loadType, int boundType) {
         mAppExecutors = appExecutors;
         if (boundType == BOUND_FROM_BACKEND) {
             mResult.setValue(Resource.loading(null));
-            LiveData<ResultType> dbSource = loadFromCache();
-            mResult.addSource(dbSource, data -> {
-                mResult.removeSource(dbSource);
+            LiveData<ResultType> cacheSource;
+            switch (loadType) {
+                case LOAD_USER_INFO:
+                case LOAD_REPOS_NORMAL:
+                    cacheSource = loadFromCache();
+                    break;
+                case LOAD_REPOS_NEXT:
+                default:
+                    cacheSource = AbsentLiveData.create();
+                    break;
+            }
+
+            mResult.addSource(cacheSource, data -> {
+                mResult.removeSource(cacheSource);
                 if (shouldFetch(data)) {
-                    fetchFromNetwork(dbSource);
+                    fetchFromNetwork(cacheSource, loadType);
                 } else {
-                    mResult.addSource(dbSource, updatedData -> mResult.setValue(
-                            Resource.success(updatedData)));
+                    mResult.addSource(cacheSource, updatedData -> mResult.setValue(
+                            Resource.success(updatedData, 0)));
                 }
             });
         } else {
@@ -80,28 +96,47 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
         }
     }
 
-    private void fetchFromNetwork(final LiveData<ResultType> dbSource) {
-        LiveData<ApiResponse<RequestType>> apiResponse = loadFromNetwork();
-        // we re-attach dbSource as a new source, it will dispatch its latest value quickly
-        mResult.addSource(dbSource, newData -> mResult.setValue(Resource.loading(newData)));
+    private void fetchFromNetwork(final LiveData<ResultType> cacheSource, int loadType) {
+        LiveData<ApiResponse<ResultType>> apiResponse = loadFromNetwork();
+        // we re-attach cacheSource as a new source, it will dispatch its latest value quickly
+        mResult.addSource(cacheSource, newData -> mResult.setValue(Resource.loading(newData)));
         mResult.addSource(apiResponse, response -> {
             mResult.removeSource(apiResponse);
-            mResult.removeSource(dbSource);
+            mResult.removeSource(cacheSource);
             //no inspection ConstantConditions
             if (response != null && response.isSuccessful()) {
                 mAppExecutors.diskIO().execute(() -> {
-                    saveResponse(processResponse(response));
-                    mAppExecutors.mainThread().execute(() ->
-                            // we specially request a new live data,
-                            // otherwise we will get immediately last cached value,
-                            // which may not be updated with latest results received from network.
-                            mResult.addSource(loadFromCache(),
-                                    newData -> mResult.setValue(Resource.success(newData)))
-                    );
+                    switch (loadType) {
+                        case LOAD_USER_INFO:
+                        case LOAD_REPOS_NORMAL:
+                            clearCache();
+                            saveToCache(processResponse(response));
+                            mAppExecutors.mainThread().execute(() -> {
+                                // we specially request a new live data,
+                                // otherwise we will get immediately last cached value,
+                                // which may not be updated with latest results received from network.
+                                mResult.addSource(loadFromCache(),
+                                        newData -> {
+                                            if (response.links.size() > 0
+                                                    && response.getLastPage() != null) {
+                                                mResult.setValue(Resource.success(newData,
+                                                        response.getLastPage()));
+                                            } else {
+                                                mResult.setValue(Resource.success(newData, 0));
+                                            }
+                                        }
+                                );
+                            });
+                            break;
+                        case LOAD_REPOS_NEXT:
+                        default:
+                            saveToCache(processResponse(response));
+                            break;
+                    }
                 });
             } else {
                 onFetchFailed();
-                mResult.addSource(dbSource,
+                mResult.addSource(cacheSource,
                         newData -> mResult.setValue(Resource.error(response != null
                                 ? response.errorMessage : null, newData)));
             }
@@ -117,12 +152,12 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
     }
 
     @WorkerThread
-    protected RequestType processResponse(ApiResponse<RequestType> response) {
+    protected ResultType processResponse(ApiResponse<ResultType> response) {
         return response.body;
     }
 
     @WorkerThread
-    protected abstract void saveResponse(@NonNull RequestType item);
+    protected abstract void saveToCache(@NonNull ResultType item);
 
     @MainThread
     protected abstract boolean shouldFetch(@Nullable ResultType data);
@@ -133,5 +168,7 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
 
     @NonNull
     @MainThread
-    protected abstract LiveData<ApiResponse<RequestType>> loadFromNetwork();
+    protected abstract LiveData<ApiResponse<ResultType>> loadFromNetwork();
+
+    protected abstract void clearCache();
 }

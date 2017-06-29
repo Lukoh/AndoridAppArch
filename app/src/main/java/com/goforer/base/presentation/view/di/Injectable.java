@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.goforer.goforerarchblueprint.di;
+package com.goforer.base.presentation.view.di;
 
 /**
  * Marks an activity / fragment injectable.

@@ -16,6 +16,8 @@
 
 package com.goforer.base.presentation.view.fragment;
 
+import android.arch.lifecycle.LifecycleRegistry;
+import android.arch.lifecycle.LifecycleRegistryOwner;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -23,12 +25,23 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 
 import com.goforer.base.presentation.view.activity.BaseActivity;
+import com.goforer.base.presentation.view.di.Injectable;
+
+import java.util.regex.Matcher;
 
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
-public class BaseFragment extends Fragment {
+public class BaseFragment extends Fragment implements LifecycleRegistryOwner, Injectable {
     protected BaseActivity mActivity;
     protected Context mContext;
+
+    private final LifecycleRegistry mLifecycleRegistry = new LifecycleRegistry(this);
+
+    @Override
+    public LifecycleRegistry getLifecycle() {
+        return mLifecycleRegistry;
+    }
 
     @Override
     public void onAttach(Context context) {

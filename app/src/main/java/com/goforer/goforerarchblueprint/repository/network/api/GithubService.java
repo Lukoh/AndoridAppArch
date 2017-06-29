@@ -26,6 +26,7 @@ import java.util.List;
 
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface GithubService {
     @GET("/users/{name}")
@@ -34,8 +35,14 @@ public interface GithubService {
     );
 
     @GET("/users/{name}/repos")
-    LiveData<ApiResponse<List<Repo>>> getRepository(
+    LiveData<ApiResponse<List<Repo>>> getRepos(
             @Path("name") String name
+    );
+
+    @GET("/user/{uid}/repos")
+    LiveData<ApiResponse<List<Repo>>> getNextRepos(
+            @Path("uid") int uid,
+            @Query("page") int page
     );
 }
 
