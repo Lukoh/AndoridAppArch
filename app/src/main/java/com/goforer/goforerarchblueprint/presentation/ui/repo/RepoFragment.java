@@ -260,11 +260,6 @@ public class RepoFragment extends RecyclerFragment<Repo> {
         Log.i(TAG, "updateData");
     }
 
-    @Override
-    protected boolean isLastPage(int pageNum) {
-        return (getTotalPage() == pageNum) && (getTotalPage() >= 1);
-    }
-
     private void requestRepositoryList(final boolean isNew)
             throws UnsupportedEncodingException, NoSuchAlgorithmException {
         mRepoViewModel = ViewModelProviders.of(this, mRepoViewModelFactory)

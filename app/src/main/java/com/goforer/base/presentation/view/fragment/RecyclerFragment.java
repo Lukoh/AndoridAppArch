@@ -265,6 +265,21 @@ public abstract class RecyclerFragment<T> extends BaseFragment {
     }
 
     /**
+     * Check if the given page is the last page.
+     * Return true if the given page is the last page
+     * <p>
+     * To check if the given page is the last page, you must override
+     * This method is called whenever the swipe gesture triggers a refresh.
+     * </p>
+     *
+     * @param pageNum the current page number to check if given page is the last page
+     *
+     */
+    protected boolean isLastPage(int pageNum) {
+        return (getTotalPage() == pageNum) && (getTotalPage() >= 1);
+    }
+
+    /**
      * Set the total page count
      *
      * @param totalPage The total page count
@@ -467,19 +482,6 @@ public abstract class RecyclerFragment<T> extends BaseFragment {
      *
      */
     protected abstract void updateData();
-
-    /**
-     * Check if the given page is the last page.
-     * Return true if the given page is the last page
-     * <p>
-     * To check if the given page is the last page, you must override
-     * This method is called whenever the swipe gesture triggers a refresh.
-     * </p>
-     *
-     * @param pageNum the current page number to check if given page is the last page
-     *
-     */
-    protected abstract boolean isLastPage(int pageNum);
 
     /**
      * Check if the DividerItemDecoration is visible.
