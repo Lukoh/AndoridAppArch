@@ -66,7 +66,7 @@ public class RepoFragment extends RecyclerFragment<Repo> {
     private static final String TAG = "RepoFragment";
 
     private static final long STOP_LOADING_TIME0UT = 600;
-    private static final long STOP_REFRESHING_TIMEOUT = 1100;
+    private static final long STOP_REFRESHING_TIMEOUT = 100;
 
     private RepoAdapter mAdapter;
 
@@ -294,8 +294,8 @@ public class RepoFragment extends RecyclerFragment<Repo> {
                         }
                     }
                 } else {
-                    stopLoading(STOP_REFRESHING_TIMEOUT);
                     if (repoListResource != null && repoListResource.getStatus().equals(ERROR)) {
+                        stopLoading(STOP_REFRESHING_TIMEOUT);
                         mSwipeLayout.setVisibility(View.GONE);
                         mNoResultText.setText(repoListResource.getMessage());
                         mNoResultText.setVisibility(View.VISIBLE);
