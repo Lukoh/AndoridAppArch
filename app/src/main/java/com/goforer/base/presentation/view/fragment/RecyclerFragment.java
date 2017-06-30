@@ -191,6 +191,7 @@ public abstract class RecyclerFragment<T> extends BaseFragment {
                     if (lastVisibleItemPosition >= totalItemCount - 1) {
                         mBaseArrayAdapter.setReachedToLastItem(true);
                         if (isLastPage(mCurrentPage)) {
+                            reachToLastPage();
                             doneRefreshing();
                             mBaseArrayAdapter.setReachedToLastPage(true);
 
@@ -494,6 +495,13 @@ public abstract class RecyclerFragment<T> extends BaseFragment {
      * @return true if the ItemDecoration in {@link RecyclerView} must be visible
      */
     protected abstract boolean isItemDecorationVisible();
+
+    /**
+     * Notify when the end of the page is reached
+     */
+    protected abstract void reachToLastPage();
+
+    public abstract void onSorted(List<T> items);
 
     /**
      * The information should be refreshed whenever the RecyclerFragment is created or

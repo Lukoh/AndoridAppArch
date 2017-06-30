@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/sort_by_name"
+        android:icon="@drawable/ic_menu_sort_name"
+        android:visible="false"
+        android:title="@string/repo_sort_name"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/sort_by_star"
+        android:icon="@drawable/ic_menu_sort_star"
+        android:visible="false"
+        android:title="@string/repo_sort_star"
+        app:showAsAction="ifRoom" />
+</menu>

@@ -36,6 +36,7 @@ import android.app.Application;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 
+import com.goforer.goforerarchblueprint.domain.sort.SortImpl;
 import com.goforer.goforerarchblueprint.repository.model.cache.GithubCache;
 import com.goforer.goforerarchblueprint.repository.model.cache.RepoDao;
 import com.goforer.goforerarchblueprint.repository.model.cache.UserDao;
@@ -61,7 +62,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * A module for Android-specific dependencies which require a {@link Context} or
  * {@link android.app.Application} to create.
  */
-@Module(subcomponents = {UserViewModelSubComponent.class, RepoViewModelSubComponent.class})
+@Module(subcomponents = {
+        UserViewModelSubComponent.class,
+        RepoViewModelSubComponent.class
+        })
 public class AppModule {
     private static final long READ_TIME_OUT = 5;
     private static final long WRITE_TIME_OUT = 5;
@@ -135,6 +139,11 @@ public class AppModule {
     RepoViewModelFactory provideRepoViewModelFactory(
             RepoViewModelSubComponent.Builder viewModelSubComponent) {
         return new RepoViewModelFactory(viewModelSubComponent.build());
+    }
+
+    @Singleton @Provides
+    SortImpl providesSort() {
+        return new SortImpl<>();
     }
 }
 

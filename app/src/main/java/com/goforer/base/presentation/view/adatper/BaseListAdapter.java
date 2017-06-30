@@ -73,7 +73,14 @@ public abstract class BaseListAdapter<T extends BaseModel> extends BaseAdapter {
 
     @SuppressLint("StaticFieldLeak")
     @MainThread
-    public void addItems(List<T> items) {
+    public void addItems(List<T> items, boolean isSorted) {
+        if (isSorted) {
+            mItems = items;
+            notifyDataSetChanged();
+
+            return;
+        }
+
         mDataVersion ++;
         if (mItems == null) {
             if (items == null) {
@@ -155,7 +162,7 @@ public abstract class BaseListAdapter<T extends BaseModel> extends BaseAdapter {
         }
     }
 
-    protected List<T> getItems() {
+    public List<T> getItems() {
         return mItems;
     }
 

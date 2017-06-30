@@ -53,6 +53,7 @@ import com.goforer.goforerarchblueprint.repository.model.data.User;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -65,7 +66,7 @@ public class RepoFragment extends RecyclerFragment<Repo> {
     private static final String TAG = "RepoFragment";
 
     private static final long STOP_LOADING_TIME0UT = 600;
-    private static final long STOP_REFRESHING_TIMEOUT = 1000;
+    private static final long STOP_REFRESHING_TIMEOUT = 1100;
 
     private RepoAdapter mAdapter;
 
@@ -151,6 +152,11 @@ public class RepoFragment extends RecyclerFragment<Repo> {
     }
 
     @Override
+    public void onSorted(List<Repo> items) {
+        mACVAdapter.get().addItems(items, true);
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
     }
@@ -227,7 +233,7 @@ public class RepoFragment extends RecyclerFragment<Repo> {
             if (repoListResource != null && repoListResource.getData() != null
                     && repoListResource.getStatus().equals(SUCCESS)) {
                 if (repoListResource.getData().size() > 0) {
-                    mACVAdapter.get().addItems(repoListResource.getData());
+                    mACVAdapter.get().addItems(repoListResource.getData(), false);
                 } else {
                     if (repoListResource.getMessage() != null) {
                         mSwipeLayout.setVisibility(View.GONE);
@@ -260,6 +266,11 @@ public class RepoFragment extends RecyclerFragment<Repo> {
         Log.i(TAG, "updateData");
     }
 
+    @Override
+    protected void reachToLastPage() {
+        ((RepoActivity)getActivity()).setMenuVisible(true);
+    }
+
     private void requestRepositoryList(final boolean isNew)
             throws UnsupportedEncodingException, NoSuchAlgorithmException {
         mRepoViewModel = ViewModelProviders.of(this, mRepoViewModelFactory)
@@ -274,7 +285,7 @@ public class RepoFragment extends RecyclerFragment<Repo> {
                     stopLoading(STOP_REFRESHING_TIMEOUT);
                     if (repoListResource.getData().size() > 0) {
                         setTotalPage(repoListResource.getLastPage());
-                        mACVAdapter.get().addItems(repoListResource.getData());
+                        mACVAdapter.get().addItems(repoListResource.getData(), false);
                     } else {
                         if (repoListResource.getMessage() != null) {
                             mSwipeLayout.setVisibility(View.GONE);
@@ -297,6 +308,10 @@ public class RepoFragment extends RecyclerFragment<Repo> {
     @MainThread
     private void stopLoading(final long delayMillis) {
         new Handler(Looper.getMainLooper()).postDelayed(this::doneRefreshing, delayMillis);
+    }
+
+    public RepoAdapter getAdapter() {
+        return mAdapter;
     }
 }
 

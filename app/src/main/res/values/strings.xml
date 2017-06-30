@@ -13,4 +13,7 @@
     <string name="drawer_item_following">Following</string>
     <string name="drawer_item_repository_count">Repositories</string>
     <string name="not_found">Not Found</string>
+    <string name="repo_sort_star">Sort by like</string>
+    <string name="repo_sort_name">Sort by name</string>
+    <string name="last_page">The current page is not last.</string>
 </resources>

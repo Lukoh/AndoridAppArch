@@ -40,7 +40,6 @@ import android.support.annotation.Nullable;
  * @param <T>
  */
 public class Resource<T> {
-
     @NonNull
     private final Status mStatus;
 
