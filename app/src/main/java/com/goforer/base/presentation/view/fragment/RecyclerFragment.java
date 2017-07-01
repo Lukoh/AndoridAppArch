@@ -18,6 +18,9 @@ package com.goforer.base.presentation.view.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.support.annotation.MainThread;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -46,6 +49,9 @@ public abstract class RecyclerFragment<T> extends BaseFragment {
     private static final String TAG = "RecyclerFragment";
 
     private static final int FIRST_PAGE = 1;
+
+    protected static final long STOP_LOADING_TIME0UT = 600;
+    protected static final long STOP_REFRESHING_TIMEOUT = 500;
 
     private BaseListAdapter mBaseArrayAdapter;
     private OnProcessListener mListener;
@@ -133,7 +139,7 @@ public abstract class RecyclerFragment<T> extends BaseFragment {
 
     private void request(boolean isRefreshed) {
         if (isLastPage(mCurrentPage)) {
-            doneRefreshing();
+            stopRefreshing();
             if (mBaseArrayAdapter != null) {
                 mBaseArrayAdapter.setReachedToLastPage(true);
             }
@@ -192,7 +198,7 @@ public abstract class RecyclerFragment<T> extends BaseFragment {
                         mBaseArrayAdapter.setReachedToLastItem(true);
                         if (isLastPage(mCurrentPage)) {
                             reachToLastPage();
-                            doneRefreshing();
+                            stopRefreshing();
                             mBaseArrayAdapter.setReachedToLastPage(true);
 
                             return;
@@ -553,9 +559,9 @@ public abstract class RecyclerFragment<T> extends BaseFragment {
     }
 
     /**
-     * Notify that data-parsing processing is completed.
+     * Stop the data-parsing processing.
      */
-    public void doneRefreshing() {
+    public void stopRefreshing() {
         mSwipeLayout.setRefreshing(false);
 
         mIsLoading = false;
@@ -564,6 +570,11 @@ public abstract class RecyclerFragment<T> extends BaseFragment {
         if (mBaseArrayAdapter != null) {
             mBaseArrayAdapter.setLoadingItems(false);
         }
+    }
+
+    @MainThread
+    public void stopLoading(final long delayMillis) {
+        new Handler(Looper.getMainLooper()).postDelayed(this::stopRefreshing, delayMillis);
     }
 
     /**

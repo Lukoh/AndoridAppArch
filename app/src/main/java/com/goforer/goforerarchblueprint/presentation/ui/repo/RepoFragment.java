@@ -19,9 +19,6 @@ package com.goforer.goforerarchblueprint.presentation.ui.repo;
 import android.arch.lifecycle.ViewModelProviders;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.support.annotation.MainThread;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
@@ -64,9 +61,6 @@ import static com.goforer.goforerarchblueprint.repository.network.response.Statu
 
 public class RepoFragment extends RecyclerFragment<Repo> {
     private static final String TAG = "RepoFragment";
-
-    private static final long STOP_LOADING_TIME0UT = 600;
-    private static final long STOP_REFRESHING_TIMEOUT = 500;
 
     private RepoAdapter mAdapter;
 
@@ -261,7 +255,7 @@ public class RepoFragment extends RecyclerFragment<Repo> {
          * I just put doneRefreshing() method because there is no data to be updated from
          * the backend side in this app-architecture project.
          */
-        doneRefreshing();
+        stopRefreshing();
 
         Log.i(TAG, "updateData");
     }
@@ -304,11 +298,6 @@ public class RepoFragment extends RecyclerFragment<Repo> {
                 }
             });
         }
-    }
-
-    @MainThread
-    private void stopLoading(final long delayMillis) {
-        new Handler(Looper.getMainLooper()).postDelayed(this::doneRefreshing, delayMillis);
     }
 
     public RepoAdapter getAdapter() {
