@@ -66,7 +66,7 @@ public class SplashFragment extends BaseFragment {
             } else {
                 if (userResource != null && userResource.getStatus().equals(ERROR)) {
                     CommonUtils.showToastMessage(getContext(), userResource.getMessage(), Toast.LENGTH_SHORT);
-                    stopLoading();
+                    close();
                 }
             }
         });
@@ -78,7 +78,7 @@ public class SplashFragment extends BaseFragment {
     }
 
     @MainThread
-    private void stopLoading() {
+    private void close() {
         new Handler(Looper.getMainLooper()).postDelayed(GoforerArchBlueprint::closeApplication, Toast.LENGTH_SHORT);
     }
 }
