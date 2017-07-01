@@ -18,6 +18,9 @@ package com.goforer.goforerarchblueprint.presentation.ui.splash;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.support.annotation.MainThread;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,7 +66,7 @@ public class SplashFragment extends BaseFragment {
             } else {
                 if (userResource != null && userResource.getStatus().equals(ERROR)) {
                     CommonUtils.showToastMessage(getContext(), userResource.getMessage(), Toast.LENGTH_SHORT);
-                    GoforerArchBlueprint.closeApplication();
+                    stopLoading();
                 }
             }
         });
@@ -72,5 +75,10 @@ public class SplashFragment extends BaseFragment {
     public void moveToMain() {
         Caller.INSTANCE.callRepository(this.getActivity());
         this.getActivity().finish();
+    }
+
+    @MainThread
+    private void stopLoading() {
+        new Handler(Looper.getMainLooper()).postDelayed(GoforerArchBlueprint::closeApplication, Toast.LENGTH_SHORT);
     }
 }
