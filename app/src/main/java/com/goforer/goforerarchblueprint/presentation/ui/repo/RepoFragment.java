@@ -66,7 +66,7 @@ public class RepoFragment extends RecyclerFragment<Repo> {
     private static final String TAG = "RepoFragment";
 
     private static final long STOP_LOADING_TIME0UT = 600;
-    private static final long STOP_REFRESHING_TIMEOUT = 200;
+    private static final long STOP_REFRESHING_TIMEOUT = 500;
 
     private RepoAdapter mAdapter;
 
