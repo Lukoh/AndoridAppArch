@@ -111,6 +111,9 @@ public abstract class NetworkBoundResource<ResultType> {
                 mAppExecutors.diskIO().execute(() -> {
                     switch (loadType) {
                         case LOAD_FIRST:
+                            // The cache should be removed whenever App is stared again and then
+                            // the data are fetched from the Back-end.
+                            // The Cache has to be light-weight.
                             clearCache();
                             saveToCache(processResponse(response));
                             mAppExecutors.mainThread().execute(() -> {
