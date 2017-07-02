@@ -60,7 +60,6 @@ public abstract class NetworkBoundResource<ResultType> {
     public static final int LOAD_NEXT = 1;
     // This LOAD_UPDATE is not used in this AppArchitecture project.
     // But in case of updating data from back-end server, this static variable could be used.
-    @SuppressWarnings("unused")
     public static final int LOAD_UPDATE = 2;
 
 
