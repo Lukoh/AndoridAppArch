@@ -222,7 +222,7 @@ public class RepoFragment extends RecyclerFragment<Repo> {
     }
 
     @Override
-    protected void requestNextData(int page) {
+    protected void reachToEndPage(int page) {
         mRepoViewModel.getNextRepos(mUser.getId(), page).observe(this, repoListResource -> {
             if (repoListResource != null && repoListResource.getData() != null
                     && repoListResource.getStatus().equals(SUCCESS)) {

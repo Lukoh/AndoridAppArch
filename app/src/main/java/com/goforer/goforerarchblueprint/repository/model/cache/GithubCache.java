@@ -41,7 +41,7 @@ import com.goforer.goforerarchblueprint.repository.model.data.User;
 /**
  * Main cache description.
  */
-@Database(entities = {User.class, Repo.class}, version = 3)
+@Database(entities = {User.class, Repo.class}, version = 1)
 public abstract class GithubCache extends RoomDatabase {
     abstract public UserDao userDao();
     abstract public RepoDao repoDao();

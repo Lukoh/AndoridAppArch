@@ -204,8 +204,8 @@ public abstract class RecyclerFragment<T> extends BaseFragment {
                             return;
                         }
 
-                        scrolledReachToLast();
-                        requestNextData(mCurrentPage);
+                        scrollToEndPage();
+                        reachToEndPage(mCurrentPage);
                         mListener.onScrolledToLast(recyclerView, dx, dy);
                     } else {
                         mBaseArrayAdapter.setReachedToLastItem(false);
@@ -333,6 +333,9 @@ public abstract class RecyclerFragment<T> extends BaseFragment {
         mRecyclerView.addItemDecoration(createItemDecoration());
     }
 
+    /**
+     * Add the touch listener on RecyclerView
+     */
     protected void addItemTouchListener(){
     }
 
@@ -384,6 +387,11 @@ public abstract class RecyclerFragment<T> extends BaseFragment {
      */
     protected abstract LayoutManager createLayoutManager();
 
+    /**
+     * Get the last visible item index
+     *
+     * @return the last visible item index
+     */
     protected int getLastVisibleItem() {
         LayoutManager layoutManager = mRecyclerView.getLayoutManager();
         if (layoutManager instanceof LinearLayoutManager) {
@@ -478,7 +486,14 @@ public abstract class RecyclerFragment<T> extends BaseFragment {
      */
     protected abstract void requestData(boolean isNew);
 
-    protected abstract void requestNextData(int page);
+
+    /**
+     * Notify when the page reach to the end of tha page
+     *
+     * @param page ther current page
+     */
+
+    protected abstract void reachToEndPage(int page);
 
     /**
      * RequestClient to get the updated information or images from server.
@@ -507,6 +522,11 @@ public abstract class RecyclerFragment<T> extends BaseFragment {
      */
     protected abstract void reachToLastPage();
 
+    /**
+     * Notify when the current items are sorted
+     *
+     * @param items the sorted items
+     */
     public abstract void onSorted(List<T> items);
 
     /**
@@ -536,7 +556,10 @@ public abstract class RecyclerFragment<T> extends BaseFragment {
         }
     }
 
-    protected void scrolledReachToLast() {
+    /**
+     * Set the scrolling is reached to last
+     */
+    protected void scrollToEndPage() {
         Log.i(TAG, "scrolledReachToLast");
 
         if (!mIsLoading) {

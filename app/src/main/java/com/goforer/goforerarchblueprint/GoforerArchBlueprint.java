@@ -28,6 +28,7 @@ import com.bumptech.glide.Glide;
 import com.goforer.goforerarchblueprint.di.helper.AppInjector;
 import com.goforer.goforerarchblueprint.presentation.ui.view.drawer.loader.AbstractSlidingDrawerImageLoader;
 import com.goforer.goforerarchblueprint.presentation.ui.view.drawer.loader.SlidingDrawerImageLoader;
+
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
 import com.mikepenz.materialdrawer.util.DrawerImageLoader;
