@@ -19,6 +19,7 @@ package com.goforer.goforerarchblueprint.repository.model.data;
 import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Index;
+import android.support.annotation.Nullable;
 
 import com.goforer.base.presentation.model.BaseModel;
 import com.google.gson.annotations.SerializedName;
@@ -52,18 +53,22 @@ public class Repo extends BaseModel{
         return id;
     }
 
+    @Nullable
     public String getName() {
         return name;
     }
 
+    @Nullable
     public Owner getOwner() {
         return owner;
     }
 
+    @Nullable
     public String getDescription() {
         return description;
     }
 
+    @Nullable
     public String getHomepage() {
         return homepage;
     }
@@ -90,10 +95,12 @@ public class Repo extends BaseModel{
             return id;
         }
 
+        @Nullable
         public String getAvatarUrl() {
             return avatarUrl;
         }
 
+        @Nullable
         public String getReposUrl() {
             return reposUrl;
         }

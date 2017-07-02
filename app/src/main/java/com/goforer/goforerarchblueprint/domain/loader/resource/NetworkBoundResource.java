@@ -56,9 +56,12 @@ public abstract class NetworkBoundResource<ResultType> {
     public static final int BOUND_TO_BACKEND = 0;
     public static final int BOUND_FROM_BACKEND = 1;
 
-    public static final int LOAD_USER_INFO = 0;
-    public static final int LOAD_REPOS_NORMAL = 1;
-    public static final int LOAD_REPOS_NEXT = 2;
+    public static final int LOAD_FIRST = 0;
+    public static final int LOAD_NEXT = 1;
+    // This LOAD_UPDATE is not used in this AppArchitecture project.
+    // But in case of updating data from back-end server, this static variable could be used.
+    @SuppressWarnings("unused")
+    public static final int LOAD_UPDATE = 2;
 
 
     private final AppExecutors mAppExecutors;
@@ -72,11 +75,11 @@ public abstract class NetworkBoundResource<ResultType> {
             mResult.setValue(Resource.loading(null));
             LiveData<ResultType> cacheSource;
             switch (loadType) {
-                case LOAD_USER_INFO:
-                case LOAD_REPOS_NORMAL:
+                case LOAD_FIRST:
                     cacheSource = loadFromCache();
                     break;
-                case LOAD_REPOS_NEXT:
+                case LOAD_NEXT:
+                case LOAD_UPDATE:
                 default:
                     cacheSource = AbsentLiveData.create();
                     break;
@@ -107,8 +110,7 @@ public abstract class NetworkBoundResource<ResultType> {
             if (response != null && response.isSuccessful()) {
                 mAppExecutors.diskIO().execute(() -> {
                     switch (loadType) {
-                        case LOAD_USER_INFO:
-                        case LOAD_REPOS_NORMAL:
+                        case LOAD_FIRST:
                             clearCache();
                             saveToCache(processResponse(response));
                             mAppExecutors.mainThread().execute(() -> {
@@ -128,7 +130,8 @@ public abstract class NetworkBoundResource<ResultType> {
                                 );
                             });
                             break;
-                        case LOAD_REPOS_NEXT:
+                        case LOAD_NEXT:
+                        case LOAD_UPDATE:
                         default:
                             saveToCache(processResponse(response));
                             break;

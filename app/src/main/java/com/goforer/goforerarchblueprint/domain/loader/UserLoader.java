@@ -45,7 +45,7 @@ public class UserLoader extends Loader<Resource<User>> {
 
     @Override
     public LiveData<Resource<User>> load(String userName) {
-        return new NetworkBoundResource<User>(mAppExecutors, NetworkBoundResource.LOAD_USER_INFO,
+        return new NetworkBoundResource<User>(mAppExecutors, NetworkBoundResource.LOAD_FIRST,
                 NetworkBoundResource.BOUND_FROM_BACKEND) {
             @Override
             protected void saveToCache(@NonNull User user) {

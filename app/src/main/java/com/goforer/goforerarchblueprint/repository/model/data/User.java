@@ -17,6 +17,7 @@
 package com.goforer.goforerarchblueprint.repository.model.data;
 
 import android.arch.persistence.room.Entity;
+import android.support.annotation.Nullable;
 
 import com.goforer.base.presentation.model.BaseModel;
 import com.google.gson.annotations.SerializedName;
@@ -69,34 +70,42 @@ public class User extends BaseModel {
         return id;
     }
 
+    @Nullable
     public String getAvatarUrl() {
         return avatarUrl;
     }
 
+    @Nullable
     public String getAvatarId() {
         return avatarId;
     }
 
+    @Nullable
     public String getUrl() {
         return url;
     }
 
+    @Nullable
     public String getName() {
         return name;
     }
 
+    @Nullable
     public String getEmail() {
         return email;
     }
 
+    @Nullable
     public String getCompany() {
         return company;
     }
 
+    @Nullable
     public String getBlog() {
         return blog;
     }
 
+    @Nullable
     public String getLocation() {
         return location;
     }
