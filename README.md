@@ -21,7 +21,7 @@ Goforer Advanced Android Architecture consist of Presentation layer, Domain laye
 
 ### Prerequisites
 
-- Android Studio 3.0 Canary 4
+- Android Studio 3.0 Canary 5
 - Android Device with USB Debugging Enabled
 
 # License
