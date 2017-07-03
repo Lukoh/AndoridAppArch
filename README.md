@@ -16,7 +16,7 @@ Goforer Advanced Android Architecture consist of Presentation layer, Domain laye
 - [LiveData](https://developer.android.com/topic/libraries/architecture/livedata.html)
 - [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel.html)
 
-## Advanced Android App Architecture
+## Goforer Advanced Android App Architecture
 <img src="https://github.com/Lukoh/AppArch/blob/master/GoforerAppAchitecture.png" alt="Log-in Demo" width="880" />
 
 ### Prerequisites
