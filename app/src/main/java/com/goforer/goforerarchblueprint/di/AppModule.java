@@ -36,10 +36,10 @@ import android.app.Application;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 
-import com.goforer.goforerarchblueprint.domain.sort.SortImpl;
+import com.goforer.goforerarchblueprint.domain.logic.sort.SortImpl;
 import com.goforer.goforerarchblueprint.repository.model.cache.GithubCache;
-import com.goforer.goforerarchblueprint.repository.model.cache.RepoDao;
-import com.goforer.goforerarchblueprint.repository.model.cache.UserDao;
+import com.goforer.goforerarchblueprint.repository.model.cache.dao.RepoDao;
+import com.goforer.goforerarchblueprint.repository.model.cache.dao.UserDao;
 import com.goforer.goforerarchblueprint.presentation.ui.repo.viewmodel.factory.RepoViewModelFactory;
 import com.goforer.goforerarchblueprint.presentation.ui.splash.viewmodel.factory.UserViewModelFactory;
 import com.goforer.goforerarchblueprint.repository.network.api.GithubService;

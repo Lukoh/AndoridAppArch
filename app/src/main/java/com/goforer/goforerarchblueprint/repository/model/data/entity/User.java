@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.goforer.goforerarchblueprint.repository.model.data;
+package com.goforer.goforerarchblueprint.repository.model.data.entity;
 
 import android.arch.persistence.room.Entity;
 import android.support.annotation.Nullable;

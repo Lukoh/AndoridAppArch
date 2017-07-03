@@ -35,8 +35,10 @@ package com.goforer.goforerarchblueprint.repository.model.cache;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.RoomDatabase;
 
-import com.goforer.goforerarchblueprint.repository.model.data.Repo;
-import com.goforer.goforerarchblueprint.repository.model.data.User;
+import com.goforer.goforerarchblueprint.repository.model.cache.dao.RepoDao;
+import com.goforer.goforerarchblueprint.repository.model.cache.dao.UserDao;
+import com.goforer.goforerarchblueprint.repository.model.data.entity.Repo;
+import com.goforer.goforerarchblueprint.repository.model.data.entity.User;
 
 /**
  * Main cache description.

@@ -22,10 +22,10 @@ import android.arch.lifecycle.Transformations;
 import android.arch.lifecycle.ViewModel;
 import android.support.annotation.VisibleForTesting;
 
-import com.goforer.goforerarchblueprint.domain.loader.RepoLoader;
+import com.goforer.goforerarchblueprint.domain.network.loader.RepoLoader;
 import com.goforer.goforerarchblueprint.repository.network.response.Resource;
 import com.goforer.goforerarchblueprint.repository.model.data.AbsentLiveData;
-import com.goforer.goforerarchblueprint.repository.model.data.Repo;
+import com.goforer.goforerarchblueprint.repository.model.data.entity.Repo;
 
 import java.util.List;
 

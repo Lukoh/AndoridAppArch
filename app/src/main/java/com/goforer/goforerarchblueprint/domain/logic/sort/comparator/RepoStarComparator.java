@@ -14,24 +14,18 @@
  * limitations under the License.
  */
 
-package com.goforer.goforerarchblueprint.domain.loader;
+package com.goforer.goforerarchblueprint.domain.logic.sort.comparator;
 
-import android.arch.lifecycle.LiveData;
+import com.goforer.goforerarchblueprint.repository.model.data.entity.Repo;
 
-import com.goforer.goforerarchblueprint.AppExecutors;
-import com.goforer.goforerarchblueprint.repository.network.api.GithubService;
+import java.util.Comparator;
 
-import javax.inject.Inject;
-
-public abstract class Loader<T> {
-    @Inject
-    GithubService mGithubService;
-
-    @Inject
-    AppExecutors mAppExecutors;
-
-    Loader() {
+public class RepoStarComparator implements Comparator<Repo> {
+    public RepoStarComparator() {
     }
 
-    abstract public LiveData<T> load(String userName);
+        @Override
+        public int compare(Repo repo1, Repo repo2) {
+        return repo2.getStars() - repo1.getStars();
+    }
 }

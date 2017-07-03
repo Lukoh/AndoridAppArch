@@ -27,10 +27,7 @@ import android.view.View;
 import com.goforer.base.presentation.view.activity.BaseActivity;
 import com.goforer.base.presentation.view.di.Injectable;
 
-import java.util.regex.Matcher;
-
 import butterknife.ButterKnife;
-import timber.log.Timber;
 
 public class BaseFragment extends Fragment implements LifecycleRegistryOwner, Injectable {
     protected BaseActivity mActivity;

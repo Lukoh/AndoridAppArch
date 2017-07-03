@@ -31,7 +31,6 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.goforer.base.presentation.model.event.ActivityStackClearEvent;
 import com.goforer.base.presentation.utils.ConnectionUtils;

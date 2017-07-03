@@ -39,7 +39,7 @@ import com.goforer.base.presentation.view.customs.SquircleImageView;
 import com.goforer.goforerarchblueprint.GoforerArchBlueprint;
 import com.goforer.goforerarchblueprint.R;
 import com.goforer.goforerarchblueprint.presentation.caller.Caller;
-import com.goforer.goforerarchblueprint.repository.model.data.Repo;
+import com.goforer.goforerarchblueprint.repository.model.data.entity.Repo;
 
 import java.util.Collections;
 import java.util.Objects;

@@ -28,7 +28,7 @@ import android.view.View;
 import com.goforer.goforerarchblueprint.R;
 import com.goforer.goforerarchblueprint.presentation.ui.view.drawer.item.CustomCountPanelDrawableItem;
 import com.goforer.base.presentation.view.activity.BaseActivity;
-import com.goforer.goforerarchblueprint.repository.model.data.User;
+import com.goforer.goforerarchblueprint.repository.model.data.entity.User;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;

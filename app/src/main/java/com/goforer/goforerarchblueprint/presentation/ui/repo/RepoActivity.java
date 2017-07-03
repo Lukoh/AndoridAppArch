@@ -30,11 +30,11 @@ import android.widget.TextView;
 import com.goforer.base.presentation.view.activity.BaseActivity;
 import com.goforer.base.presentation.view.fragment.RecyclerFragment;
 import com.goforer.goforerarchblueprint.R;
-import com.goforer.goforerarchblueprint.domain.sort.SortImpl;
-import com.goforer.goforerarchblueprint.domain.sort.comparator.RepoNameComparator;
-import com.goforer.goforerarchblueprint.domain.sort.comparator.RepoStarComparator;
+import com.goforer.goforerarchblueprint.domain.logic.sort.SortImpl;
+import com.goforer.goforerarchblueprint.domain.logic.sort.comparator.RepoNameComparator;
+import com.goforer.goforerarchblueprint.domain.logic.sort.comparator.RepoStarComparator;
 import com.goforer.goforerarchblueprint.presentation.caller.Caller;
-import com.goforer.goforerarchblueprint.repository.model.data.Repo;
+import com.goforer.goforerarchblueprint.repository.model.data.entity.Repo;
 
 import java.lang.reflect.Method;
 

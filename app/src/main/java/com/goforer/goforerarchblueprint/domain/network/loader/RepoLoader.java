@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-package com.goforer.goforerarchblueprint.domain.loader;
+package com.goforer.goforerarchblueprint.domain.network.loader;
 
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.goforer.goforerarchblueprint.domain.loader.resource.NetworkBoundResource;
-import com.goforer.goforerarchblueprint.repository.model.cache.RepoDao;
+import com.goforer.goforerarchblueprint.domain.network.resource.NetworkBoundResource;
+import com.goforer.goforerarchblueprint.repository.model.cache.dao.RepoDao;
 import com.goforer.goforerarchblueprint.presentation.util.RateLimiter;
 import com.goforer.goforerarchblueprint.repository.network.response.ApiResponse;
 import com.goforer.goforerarchblueprint.repository.network.response.Resource;
-import com.goforer.goforerarchblueprint.repository.model.data.Repo;
+import com.goforer.goforerarchblueprint.repository.model.data.entity.Repo;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;

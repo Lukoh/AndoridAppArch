@@ -19,8 +19,8 @@ package com.goforer.goforerarchblueprint.repository.network.api;
 import android.arch.lifecycle.LiveData;
 
 import com.goforer.goforerarchblueprint.repository.network.response.ApiResponse;
-import com.goforer.goforerarchblueprint.repository.model.data.Repo;
-import com.goforer.goforerarchblueprint.repository.model.data.User;
+import com.goforer.goforerarchblueprint.repository.model.data.entity.Repo;
+import com.goforer.goforerarchblueprint.repository.model.data.entity.User;
 
 import java.util.List;
 

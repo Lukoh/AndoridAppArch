@@ -45,8 +45,8 @@ import com.goforer.goforerarchblueprint.presentation.ui.repo.viewmodel.factory.R
 import com.goforer.goforerarchblueprint.presentation.ui.splash.viewmodel.factory.UserViewModelFactory;
 import com.goforer.goforerarchblueprint.presentation.util.AutoClearedValue;
 import com.goforer.goforerarchblueprint.repository.network.response.Resource;
-import com.goforer.goforerarchblueprint.repository.model.data.Repo;
-import com.goforer.goforerarchblueprint.repository.model.data.User;
+import com.goforer.goforerarchblueprint.repository.model.data.entity.Repo;
+import com.goforer.goforerarchblueprint.repository.model.data.entity.User;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
@@ -148,6 +148,23 @@ public class RepoFragment extends RecyclerFragment<Repo> {
     @Override
     public void onSorted(List<Repo> items) {
         mACVAdapter.get().addItems(items, true);
+    }
+
+    @Override
+    public void onSearched(List<Repo> items) {
+
+    }
+
+    @Override
+    public void onFirstVisibleItem(int position) {
+        // To Do::Implement playing the video file with position in case of video item
+        Log.i(TAG, "onFirstVisibleItem : " + position);
+    }
+
+    @Override
+    public void onLastVisibleItem(int position) {
+        // To Do::Implement playing the video file with position in case of video item
+        Log.i(TAG, "onLastVisibleItem : " + position);
     }
 
     @Override

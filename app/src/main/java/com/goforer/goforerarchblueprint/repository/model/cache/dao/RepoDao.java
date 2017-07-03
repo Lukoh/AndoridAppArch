@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.goforer.goforerarchblueprint.repository.model.cache;
+package com.goforer.goforerarchblueprint.repository.model.cache.dao;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
@@ -22,7 +22,7 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
-import com.goforer.goforerarchblueprint.repository.model.data.Repo;
+import com.goforer.goforerarchblueprint.repository.model.data.entity.Repo;
 
 import java.util.List;
 

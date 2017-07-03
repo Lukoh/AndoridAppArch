@@ -217,6 +217,9 @@ public abstract class RecyclerFragment<T> extends BaseFragment {
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     mListener.onScrolling();
+                    // To Do::Implement playing the video file with position in case of video item
+                    onFirstVisibleItem(getFirstCompletelyVisibleItem());
+                    onLastVisibleItem(getLastCompletelyVisibleItem());
                 } else {
                     onScrolled(recyclerView, recyclerView.getScrollX(), recyclerView.getScrollY());
                     mListener.onScrolled(recyclerView, recyclerView.getScrollX(), recyclerView.getScrollY());
@@ -402,6 +405,29 @@ public abstract class RecyclerFragment<T> extends BaseFragment {
     }
 
     /**
+     * Get the first completely visible item index
+     *
+     * @return the last visible item index
+     */
+    protected int getFirstCompletelyVisibleItem() {
+        LayoutManager layoutManager = mRecyclerView.getLayoutManager();
+        if (layoutManager instanceof LinearLayoutManager) {
+            return ((LinearLayoutManager) layoutManager).findFirstCompletelyVisibleItemPosition();
+        }
+
+        return 0;
+    }
+
+    protected int getLastCompletelyVisibleItem() {
+        LayoutManager layoutManager = mRecyclerView.getLayoutManager();
+        if (layoutManager instanceof LinearLayoutManager) {
+            return ((LinearLayoutManager) layoutManager).findLastCompletelyVisibleItemPosition();
+        }
+
+        return 0;
+    }
+
+    /**
      * Create the ItemDecoration.
      *
      * An ItemDecoration allows the application to add a special drawing and layout offset
@@ -528,6 +554,30 @@ public abstract class RecyclerFragment<T> extends BaseFragment {
      * @param items the sorted items
      */
     public abstract void onSorted(List<T> items);
+
+    /**
+     * Notify when the input keyword is searched
+     *
+     * @param items the sorted items
+     */
+    @SuppressWarnings("unused")
+    public abstract void onSearched(List<T> items);
+
+    /**
+     * Callback method to be invoked to notify the first visible position when RecyclerView's scroll
+     * state is idle.
+     *
+     * @param position the adapter position of the first fully visible item on RecyclerView
+     */
+    public abstract void onFirstVisibleItem(int position);
+
+    /**
+     * Callback method to be invoked to notify the last visible position when RecyclerView's scroll
+     * state is idle.
+     *
+     * @param position the adapter position of the last fully visible item on RecyclerView
+     */
+    public abstract void onLastVisibleItem(int position);
 
     /**
      * The information should be refreshed whenever the RecyclerFragment is created or

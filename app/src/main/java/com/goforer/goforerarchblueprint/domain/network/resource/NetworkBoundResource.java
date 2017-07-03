@@ -30,7 +30,7 @@
  * limitations under the License.
  */
 
-package com.goforer.goforerarchblueprint.domain.loader.resource;
+package com.goforer.goforerarchblueprint.domain.network.resource;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
@@ -62,7 +62,6 @@ public abstract class NetworkBoundResource<ResultType> {
     // But in case of updating data from back-end server, this static variable could be used.
     public static final int LOAD_UPDATE = 2;
 
-
     private final AppExecutors mAppExecutors;
 
     private final MediatorLiveData<Resource<ResultType>> mResult = new MediatorLiveData<>();
@@ -78,7 +77,7 @@ public abstract class NetworkBoundResource<ResultType> {
                     cacheSource = loadFromCache();
                     break;
                 case LOAD_NEXT:
-                case LOAD_UPDATE:
+                case LOAD_UPDATE: //To Do::Implement the code of updating in the future
                 default:
                     cacheSource = AbsentLiveData.create();
                     break;
@@ -133,7 +132,7 @@ public abstract class NetworkBoundResource<ResultType> {
                             });
                             break;
                         case LOAD_NEXT:
-                        case LOAD_UPDATE:
+                        case LOAD_UPDATE: //To Do::Implement the code of updating in the future
                         default:
                             saveToCache(processResponse(response));
                             break;
