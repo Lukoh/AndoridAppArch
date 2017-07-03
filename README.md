@@ -8,7 +8,7 @@ You can use all source code in this project as a learning reference, or as a sta
  
  
 ## Summary
-Goforer Advanced Android Architecture consist of Presentation layer, Domain layer and Repository layer. And new latest technologies, Clean Architecture + Dagger 2.11 + MVVM design pattern + LiveData + ROOM Tech, were applied into Advanced Android App Architecture. And RecyclreFragment() Ver 2.0 has been updated. The advanced fuction already was applied into RecyclreFragment(). These stuff make Android Apps to be extended being more competitive power and help them to maintain consistency.
+Goforer Advanced Android Architecture consist of Presentation layer, Domain layer and Repository layer. And new latest technologies, Clean Architecture + Dagger 2.11 + MVVM design pattern + LiveData + ROOM Tech, were applied into Advanced Android App Architecture. And [RecyclreFragment]() Ver 2.0 has been updated. The advanced fuction already was applied into [RecyclreFragment](). These stuff make Android Apps to be extended being more competitive power and help them to maintain consistency.
 
 ## Components Demonstrated
 - [Dagger 2.11](https://google.github.io/dagger/)
