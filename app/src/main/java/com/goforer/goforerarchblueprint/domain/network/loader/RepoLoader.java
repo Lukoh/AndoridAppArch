@@ -46,7 +46,7 @@ public class RepoLoader extends Loader<Resource<List<Repo>>> {
 
     @Override
     public LiveData<Resource<List<Repo>>> load(String userName) {
-        return new NetworkBoundResource<List<Repo>>(mAppExecutors, NetworkBoundResource.LOAD_FIRST,
+        return new NetworkBoundResource<List<Repo>, List<Repo>>(NetworkBoundResource.LOAD_FIRST,
                             NetworkBoundResource.BOUND_FROM_BACKEND) {
             @Override
             protected void saveToCache(@NonNull List<Repo> repos) {
@@ -83,7 +83,7 @@ public class RepoLoader extends Loader<Resource<List<Repo>>> {
     }
 
     public LiveData<Resource<List<Repo>>> loadNext(int uid, int page) {
-        return new NetworkBoundResource<List<Repo>>(mAppExecutors, NetworkBoundResource.LOAD_NEXT,
+        return new NetworkBoundResource<List<Repo>, List<Repo>>(NetworkBoundResource.LOAD_NEXT,
                 NetworkBoundResource.BOUND_FROM_BACKEND) {
             @Override
             protected void saveToCache(@NonNull List<Repo> repos) {
